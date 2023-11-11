@@ -1,0 +1,61 @@
+# ============  BE  ============= #
+# Ignore local python virtual environment
+venv/
+
+# Ignore node_modules
+node_modules/
+
+# Ignore accounts created by api's
+**/__pycache__/
+
+# Ignore migrate files
+**/migrations/
+
+# Ignore database
+**/db.*
+
+# ============  FE  ============= #
+# dependencies
+/FE/node_modules
+/FE/.pnp
+.pnp.js
+
+# testing
+/FE/coverage
+
+# next.js
+/FE/.next/
+/FE/out/
+
+# production
+/FE/build
+
+# misc
+.DS_Store
+/FE/*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+FE/*.tsbuildinfo
+next-env.d.ts
+
+
+# ============  Other  ============= #
+# Ignore .vscode
+.vscode/
+
+# Ignore .idea
+.idea/
+
+# Ignore test files
+**/test.*

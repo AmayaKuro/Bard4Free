@@ -1,0 +1,34 @@
+#navbar {
+    display: grid;
+    grid-template-rows: 1fr 8fr 1.5fr;
+    max-width: 20%;
+    min-width: 20%;
+    max-height: 100%;
+    padding: 0 2rem;
+}
+
+.navHeader img {
+    margin: 0 auto;
+    width: 100px;
+    display: block;
+}
+
+.navBody {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid hsl(45, 12%, 34%);
+    border-radius: 1rem;
+    padding: 1rem;
+    /* 
+    This force element having grid frame == auto to stay at decent value at which parent's 
+    max-size doesn't get violate (max-height: 100%; in this case)
+    */
+    overflow: hidden;
+}
+
+.navFooter {
+    margin-block: 2rem;
+    border: 2px solid #605b4c;
+    border-radius: 1rem;
+    padding: 1rem;
+}

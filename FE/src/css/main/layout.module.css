@@ -1,0 +1,27 @@
+#layout {
+    display: flex;
+    /* height: 100%; figure out how to use %*/
+    height: 100vh;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    width: 100%;
+}
+
+.pageContainer {
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 2px solid #605b4c;
+    border-radius: 1rem;
+    padding: 0 2rem;
+    height: 100%;
+    margin-bottom: 2rem;
+}
+
+.chatInputContainer {
+    margin-top: auto;
+    width: 100%;
+}

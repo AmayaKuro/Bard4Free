@@ -1,0 +1,61 @@
+body {
+  background-color: #080809;
+  color: #EBEBEF;
+  margin: 0;
+  min-height: 100vh;
+}
+
+nav {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+* {
+  scrollbar-color: #dadce0 transparent
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-corner {
+  background: transparent;
+  height: 12px;
+  width: 12px
+}
+
+::-webkit-scrollbar-thumb {
+  background: content-box currentColor;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: #dadce0;
+  min-height: 48px;
+  min-width: 48px
+}
+
+::-webkit-scrollbar-thumb:active {
+  color: #5f6368
+}
+
+::-webkit-scrollbar-button {
+  height: 0;
+  width: 0
+}
+
+.rainbow_text {
+  background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000, #ffff00, #00ff00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: #fff9 !important;
+  animation: rainbow_animation 4s linear 0s infinite;
+  background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+  0% {
+    background-position: 0 0
+  }
+
+  to {
+    background-position: 100% 0
+  }
+}

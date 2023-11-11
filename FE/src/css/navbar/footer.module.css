@@ -1,0 +1,18 @@
+#infoButton {
+    width: 100%;
+    align-items: start;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+}
+
+#infoButton .name {
+    margin-right: auto;
+}
+
+#menu {
+    width: 100%;
+}
+
+#menu .menuItemName {
+    margin-left: 1rem;
+}

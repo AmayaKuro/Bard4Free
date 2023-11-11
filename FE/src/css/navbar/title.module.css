@@ -1,0 +1,38 @@
+.newConvContainer {
+    border-bottom: 1px solid #757171;
+    background-color: inherit;
+    margin-bottom: 1rem;
+}
+
+.newConvBtn {
+    color: inherit;
+    margin: 0 0 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+
+.titleContainer {
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 1rem;
+}
+
+.loadingContainer span {
+    display: table;
+    margin: 0 auto;
+}
+
+.titleContainer button {
+    justify-content: start;
+    text-align: start;
+}
+
+.titleContainer button:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+
+.titleContainer .selected {
+    background-color: #ebebeb;
+    color: #333232;
+}

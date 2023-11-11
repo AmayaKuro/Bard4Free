@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    max-width: 30vw;
+    min-height: 100vh;
+    border-radius: 1rem;
+}
+
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-radius: inherit;
+    padding: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.3rem;
+    background-color: #151515;
+    border-radius: 1rem;
+    padding: 3rem;
+    max-width: 80%;
+}
+
+.form .formGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form .formGroup label {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+}
+
+
+.formButton {
+    margin-left: auto;
+    font-size: 1rem;
+    background-color: inherit;
+    color: inherit;
+    padding: .5rem .8rem;
+    border: 1px solid grey;
+    border-radius: inherit;
+}
+
+
+.footer {
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer p {
+    font-size: 1rem;
+    color: rgb(169, 169, 169);
+    margin: 0;
+    padding: 1.5px;
+    
+}
+
+.footer a:visited {
+    color: blue;
+    text-decoration: none;
+}
+
+
+@media screen and (max-width: 900px) {
+    .container {
+        min-width: 80vw;
+        max-width: 80vw;
+    }
+    
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        min-width: 90vw;
+        max-width: 90vw;
+    }
+    
+}

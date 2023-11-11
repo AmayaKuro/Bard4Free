@@ -1,0 +1,37 @@
+.wrapper {
+    height: 100%;
+    margin-top: 2rem;
+}
+
+.headers {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.actionContainer {
+    display: flex;
+    height: 100%;
+    border-radius: 2rem;
+}
+
+.actionContainer > div {
+    flex: 1;
+    padding: 1.5rem;
+    margin: 1rem;
+    border-radius: 2rem;
+    background-color: #111111;
+}
+
+.actionContainer > div > p {
+    font-weight: 800;
+    font-size: medium;
+}
+
+.actionContainer button{
+    width: 100%;
+    color: #ab914c;
+    text-transform: none;
+    font-size: 1rem;
+    justify-content: start;
+    text-align: start;
+}
