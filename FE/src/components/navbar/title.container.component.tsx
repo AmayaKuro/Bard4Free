@@ -12,6 +12,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { type ConversationTitleProps, useConversation } from '@/assets/providers/conversation';
+import { useAlert } from '@/assets/providers/alert';
+
 import { BackendFetch } from '@/assets/fetch/BE';
 
 import styles from '@/css/navbar/title.module.css'
@@ -23,12 +25,14 @@ type TitleSectionProps = {
     mouseY: number;
 };
 
+
 const TitleContainer: React.FC = () => {
     const { state: { conversationTitles, currentResponseProps }, dispatch: { setConversationTitles } } = useConversation();
     const [hasFetched, setHasFetched] = useState(false);
     const [anchorTitleSelected, setAnchorTitleSelected] = useState<TitleSectionProps>();
     const [deleting, setDeleting] = useState(false);
 
+    const { dispatch: { setAlertMessage, setSeverity } } = useAlert();
     const { data: session } = useSession();
 
     const router = useRouter();
@@ -56,7 +60,10 @@ const TitleContainer: React.FC = () => {
                 setConversationTitles(res);
                 setHasFetched(true);
             })
-            .catch(() => {
+            .catch((e) => {
+                setAlertMessage("Unable to get conversations");
+                setSeverity("error");
+
                 setHasFetched(true);
             });
 
@@ -78,18 +85,24 @@ const TitleContainer: React.FC = () => {
                 conversation_id: conversation_id,
             },
         }).then((e) => {
-            if (e.ok) {
-                if (currentResponseProps.conversation_id === conversation_id) {
-                    router.push('/chats');
-                }
-
-                setConversationTitles((prev) => prev.filter((conversationTitle) => conversationTitle.conversation_id !== conversation_id));
-                setDeleting(false);
-                handleClose();
-            } else {
-                throw new Error('Failed to delete conversation');
+            if (!e.ok) {
+                throw new Error("Unable to delete conversation");
             }
+
+            if (currentResponseProps.conversation_id === conversation_id) {
+                router.push('/chats');
+            }
+
+            setConversationTitles((prev) => prev.filter((conversationTitle) => conversationTitle.conversation_id !== conversation_id));
+            setDeleting(false);
+            handleClose();
+
+            setAlertMessage("Delete successfully");
+            setSeverity("success");
         }).catch((err) => {
+            setAlertMessage("Unable to delete conversation");
+            setSeverity("error");
+
             setDeleting(false);
         });
     }, [session?.access_token, currentResponseProps.conversation_id, anchorTitleSelected?.conversation_id])

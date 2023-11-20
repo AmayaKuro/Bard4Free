@@ -4,6 +4,9 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 
 import { NextAuthProvider, Theme, AnimateProvider } from "@/assets/providers/framework";
+import AlertProvider from '@/assets/providers/alert';
+
+import AlertPopUp from '@/components/alert.component';
 
 
 const inter = Roboto({
@@ -27,7 +30,10 @@ export default function RootLayout({
         <NextAuthProvider>
           <Theme>
             <AnimateProvider>
-              {children}
+              <AlertProvider>
+                {children}
+                <AlertPopUp />
+              </AlertProvider>
             </AnimateProvider>
           </Theme>
         </NextAuthProvider>

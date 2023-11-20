@@ -5,7 +5,10 @@ import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 
 import { type FetchResponseProps, useConversation, } from "@/assets/providers/conversation"
+import { useAlert } from "@/assets/providers/alert"
+
 import { BackendFetch } from "@/assets/fetch/BE"
+
 import Chat from "@/components/main/chat"
 import { CreateResponseLoading } from "@/components/main/CreateResponseLoading"
 
@@ -14,6 +17,7 @@ export default function Chats() {
     const { state: { conversationTitles, responses, createStatus }, dispatch: { setCurrentResponseProps, setResponse } } = useConversation();
     const [hasFetched, setHasFetched] = useState(false);
 
+    const { dispatch: { setAlertMessage, setSeverity } } = useAlert();
     const { data: session } = useSession();
 
     const param = useParams();
@@ -39,7 +43,7 @@ export default function Chats() {
         if (hasFetched) return;
 
         // If the user is creating a new conversation, don't fetch the responses
-        if (createStatus.isCreating && createStatus.conversation_id === conversation_id) {
+        if (createStatus.conversation_id === conversation_id) {
             setHasFetched(true);
 
             return;
@@ -54,7 +58,8 @@ export default function Chats() {
                 .then((res) => {
                     if (!res.ok) {
                         setHasFetched(true);
-                        throw new Error("Failed to fetch responses");
+                        setAlertMessage("Unable to get responses");
+                        setSeverity("error");
                     }
 
                     return res.json();
@@ -64,10 +69,13 @@ export default function Chats() {
                     setHasFetched(true);
                 })
                 .catch((err) => {
+                    setAlertMessage(err.message);
+                    setSeverity("error");
+
                     router.push("/chats");
                 });
         }
-    }, [session?.access_token, hasFetched, createStatus]);
+    }, [session?.access_token, hasFetched, createStatus.conversation_id]);
 
 
     return (

@@ -1,5 +1,4 @@
 import { BackendFetch } from "../fetch/BE";
-import { NEXTAUTH_URL } from "../env"
 
 export const refreshAccessToken = async (refreshToken?: string) => {
     // If no refresh token, throw error
@@ -21,13 +20,8 @@ export const refreshAccessToken = async (refreshToken?: string) => {
     }
     // If cannnot get a new access token, sign out
     catch (e) {
-        await fetch(NEXTAUTH_URL + "/api/auth/signout", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-        });
-
         // Throw error can lead to error in app
-        // throw new Error("Cannot authenticate");
+        throw new Error("Cannot authenticate");
     }
 };
 

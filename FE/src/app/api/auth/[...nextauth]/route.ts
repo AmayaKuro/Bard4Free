@@ -15,29 +15,30 @@ const handler = NextAuth({
                 username: { label: "Username", type: "text", placeholder: "jsmith" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 if (!credentials?.username || !credentials?.password) throw new Error("Missing username or password")
 
-                const res = await BackendFetch("/login", {
-                    method: 'POST',
-                    body: {
-                        username: credentials?.username,
-                        password: credentials?.password,
-                    },
-                })
+                try {
+                    const res = await BackendFetch("/login", {
+                        method: 'POST',
+                        body: {
+                            username: credentials?.username,
+                            password: credentials?.password,
+                        },
+                    })
 
-                if (res.status === 401) throw new Error("Username or password is incorrect")
+                    if (res.status === 401) throw new Error("Username or password is incorrect")
 
-                const data = await res.json()
+                    const data = await res.json()
 
-                // If no error and we have user data, return it
-                if (res.ok && data) {
-                    return data
+                    // If no error and we have user data, return it
+                    if (res.ok && data) {
+                        return data
+                    }
+                } catch (error: any) {
+                    // Catch-all error
+                    throw new Error(error?.messages || "Something went wrong")
                 }
-
-                // Catch-all error
-                throw new Error("Something went wrong")
-
             },
         }),
     ],
@@ -54,11 +55,19 @@ const handler = NextAuth({
 
             // Refresh the backend access token if it has expired
             if (getCurrentEpochTime() > (token.access_ref || 0)) {
-                const response = await refreshAccessToken(token?.refresh_token);
+                try {
+                    const response = await refreshAccessToken(token?.refresh_token);
 
-                // else, update the token
-                token["access_token"] = response.access;
-                token["access_ref"] = getCurrentEpochTime() + env.BACKEND_ACCESS_TOKEN_LIFETIME;
+                    token["access_token"] = response.access;
+                    token["access_ref"] = getCurrentEpochTime() + env.BACKEND_ACCESS_TOKEN_LIFETIME;
+                } catch (error) {
+                    await fetch(env.NEXTAUTH_URL + "/api/auth/signout", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                    });
+
+                    // throw new Error("Session expired, please sign in again");
+                }
             }
 
             return token;
@@ -96,7 +105,7 @@ const handler = NextAuth({
 
 
     // Enable debug messages in the console if you are having problems
-    debug: process.env.NODE_ENV === 'development',
+    debug: false,
 })
 
 

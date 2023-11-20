@@ -67,7 +67,7 @@ const FooterComponent = () => {
                 <MenuItem
                     onClick={e => {
                         handleClose();
-                        window.open("https://github.com/AmayaKuro/CS50w/tree/main/FinalProject")
+                        window.open("https://github.com/AmayaKuro/Bard4Free")
                     }}
                 >
                     <ListItemIcon>

@@ -8,15 +8,18 @@ import IconButton from "@mui/material/IconButton";
 import SendIcon from '@mui/icons-material/Send';
 
 import { type FetchResponseProps, useConversation } from "@/assets/providers/conversation";
+import { useAlert } from "@/assets/providers/alert";
+
 import { BackendFetch } from "@/assets/fetch/BE";
 
 import styles from "@/css/main/chatInput.module.css";
 
 
 export default function ChatInput() {
-    const { state: { currentResponseProps, createStatus, initMessage }, dispatch: { setResponse, setCreateStatus, setConversationTitles } } = useConversation();
     const [message, setMessage] = useState("");
 
+    const { state: { currentResponseProps, createStatus, initMessage }, dispatch: { setResponse, setCreateStatus, setConversationTitles } } = useConversation();
+    const { dispatch: { setAlertMessage, setSeverity } } = useAlert();
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -76,8 +79,9 @@ export default function ChatInput() {
             }
 
             // IDK wtf is going on here (actually I does understand some), but it works
-            const fetchResponse = res.json() as unknown as FetchResponseProps;
+            const fetchResponse = await res.json() as unknown as FetchResponseProps;
 
+            // Add new response and update the create status
             setResponse((prev) => (prev.concat({
                 ...fetchResponse,
                 message: sendMessage,
@@ -89,6 +93,7 @@ export default function ChatInput() {
                 message: sendMessage,
             }));
 
+            // Send the user to the new conversation if it's a new conversation
             if (currentResponseProps.conversation_id === "") {
                 // Add the new conversation to the begin of conversation titles
                 setConversationTitles((prev) => [
@@ -103,14 +108,16 @@ export default function ChatInput() {
                 router.push(`/chats/${fetchResponse.conversation_id}`);
             }
 
-        } catch (e) {
+        } catch (e: any) {
             setCreateStatus((prev) => ({
-                // TODO: might want to add a error message here
                 ...prev,
                 isCreating: false,
             }))
+
+            setAlertMessage(e?.message || "Unable to send message");
+            setSeverity("error");
         }
-        
+
     }, [message, session?.access_token, currentResponseProps]);
 
 

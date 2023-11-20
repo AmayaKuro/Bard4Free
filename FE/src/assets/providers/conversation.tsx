@@ -1,5 +1,5 @@
 "use client";
-import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
+import { useContext, useState, useMemo, Dispatch, SetStateAction, createContext } from 'react';
 
 
 // Base response props
@@ -69,7 +69,8 @@ export const ConversationProvider = ({ children }: { children: React.ReactNode }
     // This is used for home recommend message     
     const [initMessage, setInitMessage] = useState("");
 
-    const value = {
+    // Use memo to prevent unnecessary re-render for the Provider
+    const value = useMemo(() => ({
         state: {
             conversationTitles: conversationTitles,
             currentResponseProps: currentResponseProps,
@@ -78,7 +79,7 @@ export const ConversationProvider = ({ children }: { children: React.ReactNode }
             initMessage: initMessage,
         },
         dispatch: { setConversationTitles, setCurrentResponseProps, setResponse, setCreateStatus, setInitMessage }
-    };
+    }), [conversationTitles, currentResponseProps, responses, createStatus, initMessage]);
 
     return (
         <ConversationContext.Provider value={value}>

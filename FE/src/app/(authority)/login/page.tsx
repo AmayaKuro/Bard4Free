@@ -1,7 +1,6 @@
 "use client"
 import { signIn } from "next-auth/react";
 import { useState, useCallback } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 import { TextField } from '@mui/material'
@@ -15,9 +14,6 @@ export default function Login() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-
-    const router = useRouter()
-    const searchParams = useSearchParams()
 
     const login = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -39,7 +35,7 @@ export default function Login() {
 
         // Nextauth doesn't return error, so we thrown catch-all sentence
         if (res?.error) {
-            setError('Unable to sign in');
+            setError(res.error);
             setLoading(false);
         }
 
