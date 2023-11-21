@@ -175,7 +175,7 @@ def requestResponse(request):
         # If chat can be created, response_id should exist and be valid, so no need to check
         response = Responses.objects.get(response_id=response_id)
         if response:
-            Responses.objects.filter(pk__gt=response.pk).delete()
+            Responses.objects.filter(pk__gt=response.pk, conversation=conversation_key).delete()
 
         # Save response
         if not saveResponse(conversation_key, message, chat):
