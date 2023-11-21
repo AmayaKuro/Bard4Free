@@ -61,12 +61,14 @@ const handler = NextAuth({
                     token["access_token"] = response.access;
                     token["access_ref"] = getCurrentEpochTime() + env.BACKEND_ACCESS_TOKEN_LIFETIME;
                 } catch (error) {
+                    // If can't retrieve new access token, sign out
                     await fetch(env.NEXTAUTH_URL + "/api/auth/signout", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                     });
 
-                    // throw new Error("Session expired, please sign in again");
+                    // Throw error to force sign out
+                    throw new Error("Session expired, please sign in again");
                 }
             }
 
