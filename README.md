@@ -41,7 +41,13 @@ python3 -m venv venv
     .\venv\Scripts\activate
     ```
 
-4. Go to `BE` folder that contain `manage.py` and start up the server:
+4. Install the required Python packages from `requirements.txt`:
+
+```
+pip install -r requirements.txt
+```
+
+5. Go to `BE` folder that contain `manage.py` and start up the server:
 ```bash
 # Find yourself the location of the folder
 cd BE
