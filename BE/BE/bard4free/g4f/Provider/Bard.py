@@ -107,7 +107,6 @@ class Bard(AsyncProvider):
             answer["choice_id"] = chat[4][0][0]
 
             markdown = chat[4][0][1][0]
-            print(chat[4][0])
             responseImgList = chat[4][0][12]
             answer["log"] = markdown if responseImgList == [] or responseImgList[1] == None else addImageMarkdown(markdown, responseImgList[1])
 

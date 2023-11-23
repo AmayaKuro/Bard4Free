@@ -141,7 +141,7 @@ def requestResponse(request):
         # Get the message from the request since its content type is application/json not multipart/form-data
         try:
             data = json.loads(request.body.decode("utf-8"))
-            message = data["message"]
+            message= data["message"].strip()
             conversation_id = data["conversation_id"]
             response_id = data["response_id"]
             choice_id = data["choice_id"]
