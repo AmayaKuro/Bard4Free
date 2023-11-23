@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -17,6 +17,7 @@ import styles from "@/css/main/chatInput.module.css";
 
 export default function ChatInput() {
     const [message, setMessage] = useState("");
+    const isEmpty = useMemo(() => message.trim() === "", [message]);
 
     const { state: { currentResponseProps, createStatus, initMessage }, dispatch: { setResponse, setCreateStatus, setConversationTitles } } = useConversation();
     const { dispatch: { setAlertMessage, setSeverity } } = useAlert();
@@ -24,6 +25,7 @@ export default function ChatInput() {
     const router = useRouter();
 
 
+    // This is used for sending a message when the user choose and head start prompt
     // If initMessage is not empty, send it as a new conversation
     useEffect(() => {
         if (initMessage !== "") {
@@ -33,7 +35,7 @@ export default function ChatInput() {
 
 
     const sendMessage = useCallback(async (callbackMessage?: string) => {
-        if ((message === "" && callbackMessage === "") || !session?.access_token) return;
+        if ((isEmpty && callbackMessage === "") || !session?.access_token) return;
 
         const sendMessage = callbackMessage || message;
 
@@ -132,12 +134,22 @@ export default function ChatInput() {
                 className={styles.textField}
                 autoComplete="true"
                 onChange={(e) => setMessage(e.currentTarget.value)}
+                onKeyDown={(e) => {
+                    // Send the message if the user press enter
+                    if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        // Prevent the user from sending empty message 
+                        if (!isEmpty) {
+                            sendMessage();
+                        }
+                    }
+                }}
             />
             <IconButton
                 children={<SendIcon />}
                 className={styles.submitButton}
                 onClick={() => sendMessage()}
-                disabled={message === "" || createStatus.isCreating}
+                disabled={isEmpty || createStatus.isCreating}
             />
 
         </div>
