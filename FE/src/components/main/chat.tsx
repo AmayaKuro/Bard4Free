@@ -1,6 +1,5 @@
 import Markdown from 'markdown-to-jsx';
-
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import hljs from 'highlight.js/lib/common';
 
 import { type ResponseProps } from "@/assets/providers/conversation";
 import Wrapper from './response/Wrapper';
@@ -10,7 +9,8 @@ import styles from "@/css/main/chat.module.css";
 
 
 const Chat: React.FC<{ responses: ResponseProps[] }> = ({ responses }) => {
-
+    // this will run when the responses get added, and will highlight the code
+        hljs.highlightAll();
     return (
         <>
             {responses.map((response) => (

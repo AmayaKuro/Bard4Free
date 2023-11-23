@@ -13,7 +13,7 @@ export default function ChatLayout({
 
     return (
         <ConversationProvider>
-            <div id={styles.layout}>
+            <div className={styles.layout}>
                 <Navbar />
 
                 <main className={styles.mainContainer}>

@@ -1,8 +1,9 @@
 "use client"
-import { useEffect, useCallback, useState } from "react"
+import { useEffect, useCallback, useState, useMemo } from "react"
 import { useParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
+import "highlight.js/styles/github-dark.css";
 
 import { type FetchResponseProps, useConversation, } from "@/assets/providers/conversation"
 import { useAlert } from "@/assets/providers/alert"
@@ -14,7 +15,12 @@ import { CreateResponseLoading } from "@/components/main/CreateResponseLoading"
 
 
 export default function Chats() {
-    const { state: { conversationTitles, responses, createStatus }, dispatch: { setCurrentResponseProps, setResponse } } = useConversation();
+    const { state, dispatch: { setCurrentResponseProps, setResponse } } = useConversation();
+    // This is to prevent re-rendering
+    const conversationTitles = useMemo(() => state.conversationTitles, [state.conversationTitles]);
+    const responses = useMemo(() => {console.log("render time");return state.responses;}, [state.responses]);
+    const createStatus = useMemo(() => state.createStatus, [state.createStatus]);
+
     const [hasFetched, setHasFetched] = useState(false);
 
     const { dispatch: { setAlertMessage, setSeverity } } = useAlert();
@@ -24,6 +30,7 @@ export default function Chats() {
     const conversation_id = (param as { conversation_id: string }).conversation_id;
     const router = useRouter();
 
+    
     // This will always set current response props to the last response when responses state changes
     useEffect(() => {
         // Match the current conversation_id to the conversation title
