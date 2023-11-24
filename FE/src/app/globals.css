@@ -12,6 +12,10 @@ nav {
   z-index: 1;
 }
 
+a {
+color: #a8c7fa;
+}
+
 * {
   scrollbar-color: #dadce0 transparent
 }

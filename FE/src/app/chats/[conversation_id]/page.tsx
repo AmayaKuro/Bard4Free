@@ -1,9 +1,9 @@
 "use client"
-import { useEffect, useCallback, useState, useMemo } from "react"
+import { useEffect, useCallback, useState, useMemo, use } from "react"
 import { useParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
-import "highlight.js/styles/github-dark.css";
+
 
 import { type FetchResponseProps, useConversation, } from "@/assets/providers/conversation"
 import { useAlert } from "@/assets/providers/alert"
@@ -13,12 +13,14 @@ import { BackendFetch } from "@/assets/fetch/BE"
 import Chat from "@/components/main/chat"
 import { CreateResponseLoading } from "@/components/main/CreateResponseLoading"
 
+import hljs from "highlight.js/lib/common";
+import "highlight.js/styles/github-dark.css";
 
 export default function Chats() {
     const { state, dispatch: { setCurrentResponseProps, setResponse } } = useConversation();
     // This is to prevent re-rendering
     const conversationTitles = useMemo(() => state.conversationTitles, [state.conversationTitles]);
-    const responses = useMemo(() => {console.log("render time");return state.responses;}, [state.responses]);
+    const responses = useMemo(() => state.responses, [state.responses]);
     const createStatus = useMemo(() => state.createStatus, [state.createStatus]);
 
     const [hasFetched, setHasFetched] = useState(false);
@@ -30,6 +32,16 @@ export default function Chats() {
     const conversation_id = (param as { conversation_id: string }).conversation_id;
     const router = useRouter();
 
+    useEffect(() => {
+        console.log("checker");
+    }, [responses]);
+
+    useEffect(() => {
+        // this will run when the responses has been fetch, and will highlight the code
+        if (hasFetched) {
+            hljs.highlightAll();
+        }
+    }, [hasFetched]);
     
     // This will always set current response props to the last response when responses state changes
     useEffect(() => {
