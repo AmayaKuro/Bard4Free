@@ -127,7 +127,7 @@ def requestResponse(request):
 
         responses = (
             Responses.objects.values("response_id", "choice_id", "log", "message")
-            .filter(conversation__conversation_id=conversation_id)
+            .filter(conversation__conversation_id=conversation_id, conversation__owner=request.user)
             .order_by("pk")
         )
 
