@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
             width: open ? "100%" : "0%",
             opacity: open ? 1 : 0,
             paddingLeft: open ? "30px" : 0,
-            
+
             transitionEnd: {
                 display: (open ? "grid" : "none") as React.CSSProperties["display"],
             }
@@ -59,11 +59,24 @@ const Navbar: React.FC = () => {
 
     // Set isMobile state and add event listener to window 
     useEffect(() => {
-        setIsMobile(window.innerWidth < 768);
-        // Close navbar if window initialized in mobile
-        if (window.innerWidth < 768) setOpen(false);
+        if (window.innerWidth < 768) {
+            setIsMobile(true);
+            // Close navbar if window resized to mobile
+            setOpen(false);
+        }
 
-        const handleWindowResize = () => setIsMobile(window.innerWidth < 768);
+        const handleWindowResize = () => {
+            if (window.innerWidth < 768) {
+                setIsMobile(true);
+                // Close navbar if window resized to mobile and vice versa
+                setOpen(false);
+            }
+            else {
+                setIsMobile(false);
+                setOpen(true);
+            }
+
+        };
 
         window.addEventListener("resize", handleWindowResize);
         return () => window.removeEventListener("resize", handleWindowResize);
