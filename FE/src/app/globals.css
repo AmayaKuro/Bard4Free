@@ -5,16 +5,10 @@ body {
   min-height: 100vh;
 }
 
-nav {
-  display: flex;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
 a {
 color: #a8c7fa;
 }
+
 
 * {
   scrollbar-color: #dadce0 transparent
