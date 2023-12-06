@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/image/bard4free-cropped.png',
-        secureUrl: '/image/bard4free-cropped.png',
+        secureUrl: 'https://bard4free.vercel.app/image/bard4free-cropped.png',
         type: 'png',
         width: 1200,
         height: 630,
