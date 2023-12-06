@@ -32,10 +32,7 @@ export default function Chats() {
     const conversation_id = (param as { conversation_id: string }).conversation_id;
     const router = useRouter();
 
-    useEffect(() => {
-        console.log("checker");
-    }, [responses]);
-
+    
     useEffect(() => {
         // this will run when the responses has been fetch, and will highlight the code
         if (hasFetched) {
@@ -56,7 +53,7 @@ export default function Chats() {
             });
             document.title = `Chat: ${conversation.title}`;
         }
-    }, [conversationTitles, responses]);
+    }, [conversationTitles, conversation_id, responses]);
 
     useEffect(() => {
         if (hasFetched) return;
@@ -94,7 +91,7 @@ export default function Chats() {
                     router.push("/chats");
                 });
         }
-    }, [session?.access_token, hasFetched, createStatus.conversation_id]);
+    }, [session?.access_token, hasFetched, createStatus.conversation_id, conversation_id]);
 
 
     return (

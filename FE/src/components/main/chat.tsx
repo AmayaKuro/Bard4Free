@@ -8,7 +8,6 @@ import styles from "@/css/main/chat.module.css";
 
 
 const Chat: React.FC<{ responses: ResponseProps[] }> = ({ responses }) => {
-    console.log("Chat.tsx: renddering", responses);
     return (
         <>
             {responses.map((response) => (
@@ -16,7 +15,9 @@ const Chat: React.FC<{ responses: ResponseProps[] }> = ({ responses }) => {
                     <UserMessage message={response.message} />
 
                     <Wrapper>
-                        <Markdown children={response.log} />
+                        <Markdown>
+                            {response.log}
+                        </Markdown>
                     </Wrapper>
                 </div>
             ))}

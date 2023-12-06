@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
 
 import TitleContainer from './title.container.component';
 import FooterComponent from './footer.component';
@@ -93,7 +94,7 @@ const Navbar: React.FC = () => {
                 transition={{ duration: 0.5 }}
             >
                 <div className={styles.navHeader}>
-                    <img src="/favicon.ico" alt="logo" />
+                    <Image src="/favicon.ico" width={100} height={100} alt="logo" />
                 </div>
 
                 <div className={styles.navBody}>
@@ -106,7 +107,9 @@ const Navbar: React.FC = () => {
             </motion.nav>
 
             <div className={styles.navToggle}>
-                <IconButton children={open ? <MenuIcon fontSize="large" /> : <MenuOpenIcon fontSize="large" />} onClick={() => setOpen((perv) => !perv)} />
+                <IconButton onClick={() => setOpen((perv) => !perv)}>
+                    {open ? <MenuIcon fontSize="large" /> : <MenuOpenIcon fontSize="large" />} 
+                </IconButton>
             </div>
         </motion.div >
     );

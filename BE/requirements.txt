@@ -12,3 +12,6 @@ flask-cors
 django
 django-cors-headers
 djangorestframework
+djangorestframework-simplejwt
+boto3[crt]
+pymysql

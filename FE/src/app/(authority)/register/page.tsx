@@ -80,7 +80,7 @@ export default function Register() {
             addError('extra', 'Unable to register');
             setLoading(false);
         }
-    }, [username, password, password2])
+    }, [username, password, password2, addError])
 
 
     return (

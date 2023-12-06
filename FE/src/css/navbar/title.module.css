@@ -36,3 +36,8 @@
     background-color: #ebebeb;
     color: #333232;
 }
+
+.titleContainer .selected:hover {
+    background-color: #cecccc;
+    color: #595858;
+}

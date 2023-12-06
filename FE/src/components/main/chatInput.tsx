@@ -19,19 +19,12 @@ export default function ChatInput() {
     const [message, setMessage] = useState("");
     const isEmpty = useMemo(() => message.trim() === "", [message]);
 
-    const { state: { currentResponseProps, createStatus, initMessage }, dispatch: { setResponse, setCreateStatus, setConversationTitles } } = useConversation();
+    const conv = useConversation();
+    const { state: { currentResponseProps, createStatus, initMessage }, dispatch: { setResponse, setCreateStatus, setConversationTitles, setInitMessage } } = conv;
     const { dispatch: { setAlertMessage, setSeverity } } = useAlert();
-    const { data: session } = useSession();
+    const sess = useSession();
+    const { data: session } = sess;
     const router = useRouter();
-
-
-    // This is used for sending a message when the user choose and head start prompt
-    // If initMessage is not empty, send it as a new conversation
-    useEffect(() => {
-        if (initMessage !== "") {
-            sendMessage(initMessage);
-        }
-    }, [initMessage]);
 
 
     const sendMessage = useCallback(async (callbackMessage?: string) => {
@@ -120,7 +113,18 @@ export default function ChatInput() {
             setSeverity("error");
         }
 
-    }, [message, session?.access_token, currentResponseProps]);
+    }, [message, sess, conv]);
+
+
+    // This is used for sending a message when the user choose and head start prompt
+    // If initMessage is not empty, send it as a new conversation
+    useEffect(() => {
+        if (initMessage !== "") {
+            // remove the init message after reading
+            setInitMessage("");
+            sendMessage(initMessage);
+        }
+    }, [conv]); //this is the culprit
 
 
     return (
@@ -146,11 +150,12 @@ export default function ChatInput() {
                 }}
             />
             <IconButton
-                children={<SendIcon />}
                 className={styles.submitButton}
                 onClick={() => sendMessage()}
                 disabled={isEmpty || createStatus.isCreating}
-            />
+            >
+                <SendIcon />
+            </IconButton>
 
         </div>
 

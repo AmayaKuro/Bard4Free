@@ -76,4 +76,4 @@ npm run dev
 
 
 #### CURRENT STATE OF THE PROJECT:
-- `UNDER CONSTRUCTION`
+- `Deploying | Optimizing`

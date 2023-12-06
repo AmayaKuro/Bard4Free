@@ -79,7 +79,7 @@ export default function Login() {
                     </form>
                     <div className={styles.footer}>
                         <p>
-                            Doesn't have an account?
+                            Doesn&apos;t have an account?
                         </p>
                         <p>
                             Register <Link href="/register">here</Link>

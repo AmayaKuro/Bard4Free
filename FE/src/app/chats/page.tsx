@@ -41,17 +41,17 @@ export default function Home() {
                     <Wrapper className={styles.wrapper}>
                         <div className={styles.headers}>
                             <h1 className="rainbow_text">Bard4Free</h1>
-                            <i>"Welcome to Bard4Free, a web app that helps you generate messages using Palm model of Bard AI"</i>
+                            <i>&quot;Welcome to Bard4Free, a web app that helps you generate messages using Palm model of Bard AI&quot;</i>
                         </div>
                         <div className={styles.actionContainer}>
                             <div>
-                                <p>Doesn't know where to start? Try these:</p>
+                                <p>Doesn&apos;t know where to start? Try these:</p>
                                 <ul>
                                     <li>
                                         <Button onClick={(e) => initMessage(e.currentTarget.textContent)}>Hi, how are you?</Button>
                                     </li>
                                     <li>
-                                        <Button onClick={(e) => initMessage(e.currentTarget.textContent)}>What's the weather like today?</Button>
+                                        <Button onClick={(e) => initMessage(e.currentTarget.textContent)}>What&apos;s the weather like today?</Button>
                                     </li>
                                     <li>
                                         <Button onClick={(e) => initMessage(e.currentTarget.textContent)}>Can you recommend a good restaurant?</Button>
