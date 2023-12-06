@@ -7,6 +7,7 @@ declare module "next-auth" {
     user: {
       name?: string;
     } & DefaultSession["user"];
+    error?: string; // used for error messages
   };
 
   // access and refresh tokens are named to match the backend

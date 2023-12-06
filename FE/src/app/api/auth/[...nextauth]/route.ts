@@ -35,9 +35,11 @@ const handler = NextAuth({
                     if (res.ok && data) {
                         return data
                     }
-                } catch (error: any) {
+                } catch (error) {
                     // Catch-all error
-                    throw new Error(error?.messages || "Something went wrong")
+                    if (error instanceof Error) throw error
+
+                    else throw new Error("Something went wrong")
                 }
             },
         }),
@@ -61,14 +63,8 @@ const handler = NextAuth({
                     token["access_token"] = response.access;
                     token["access_ref"] = getCurrentEpochTime() + env.BACKEND_ACCESS_TOKEN_LIFETIME;
                 } catch (error) {
-                    // If can't retrieve new access token, sign out
-                    await fetch(env.NEXTAUTH_URL + "/api/auth/signout", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                    });
-
-                    // Throw error to force sign out
-                    throw new Error("Session expired, please sign in again");
+                    // Add error to token so we can display it in the client        
+                    token["error"] = "Session expired, please sign in again";
                 }
             }
 

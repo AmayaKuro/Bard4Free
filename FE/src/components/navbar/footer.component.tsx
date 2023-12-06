@@ -5,19 +5,20 @@ import { useSession, signOut } from 'next-auth/react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Button from "@mui/material/Button"
+import LoadingButton from '@mui/lab/LoadingButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import CircularProgress from '@mui/material/CircularProgress';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
-
 import styles from '@/css/navbar/footer.module.css'
 
 
 const FooterComponent = () => {
+    const [signOutLoading, setSignOutLoading] = useState(false);
+
     const { data: session } = useSession();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -75,18 +76,21 @@ const FooterComponent = () => {
                     </ListItemIcon>
 
                     <ListItemText>
-                        This project's Github repository
+                        This project&apos;s Github repository
                     </ListItemText>
                 </MenuItem>
 
-                <MenuItem onClick={() => signOut()}>
-                    <ListItemIcon>
-                        <LogoutIcon />
-                    </ListItemIcon>
-
-                    <ListItemText>
+                <MenuItem onClick={() => {
+                    setSignOutLoading(true);
+                    signOut();
+                }}>
+                    <LoadingButton
+                        startIcon={<LogoutIcon />}
+                        loading={signOutLoading}
+                        style={{ width: "100%" }}
+                    >
                         Logout
-                    </ListItemText>
+                    </LoadingButton>
                 </MenuItem>
             </Menu>
         </div >
