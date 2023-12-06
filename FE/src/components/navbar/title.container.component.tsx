@@ -50,6 +50,10 @@ const TitleContainer: React.FC = () => {
             },
         })
             .then((res) => {
+                if (res.status === 204) {
+                    return [];
+                }
+
                 if (res.status !== 200) {
                     throw new Error(res.statusText);
                 }
