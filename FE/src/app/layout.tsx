@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     description: 'Bard4Free: Next.js and Django-powered platform with Bard API core. Unleash creativity effortlessly. Join now for a seamless artistic experience.', 
     images: [
       {
-        url: '/image/bard4free-cropped.png',
+        url: 'https://bard4free.vercel.app/image/bard4free.png',
         width: 1200,
         height: 630,
         alt: 'Bard4Free',
