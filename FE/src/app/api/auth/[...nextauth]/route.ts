@@ -88,7 +88,7 @@ const handler = NextAuth({
                 body: {
                     refresh: messages.token["refresh_token"],
                 },
-            }).then(() => { }).catch(() => { console.log("Access key đã già rồi còn đú signout") });
+            }).then((e) => { if (!e.ok) throw new Error() }).catch(() => { console.log("Access key đã già rồi còn đú signout") });
         },
     },
 
