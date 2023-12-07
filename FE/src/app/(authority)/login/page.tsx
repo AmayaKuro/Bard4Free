@@ -52,7 +52,7 @@ export default function Login() {
                         <div className={styles.form}>
                             <div className={styles.formGroup}>
                                 <label htmlFor="username">Username:</label>
-                                <TextField type="text" name="username" placeholder="Username" className={styles.formInput} id="username" onChange={e => setUsername(e.target.value)} />
+                                <TextField type="text" name="username" placeholder="Username" className={styles.formInput} id="username" value={username} onChange={e => setUsername(e.target.value)} />
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="password">Password:</label>
@@ -62,6 +62,7 @@ export default function Login() {
                                     placeholder="Password"
                                     className={styles.formInput}
                                     id="password"
+                                    value={password}
                                     onChange={e => setPassword(e.target.value)}
                                 />
                             </div>

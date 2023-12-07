@@ -44,39 +44,40 @@ export default function Register() {
         e.preventDefault();
 
         setLoading(true);
+        try {
+            const res = await BackendFetch("/register", {
+                method: 'POST',
+                body: {
+                    username: username,
+                    password: password,
+                },
+            });
 
-        const res = await BackendFetch("/register", {
-            method: 'POST',
-            body: {
-                username: username,
-                password: password,
-            },
-        });
+            if (res.status === 400 || res.status === 401) {
+                const data = await res.json();
 
-        if (res.status === 400 || res.status === 401) {
-            const data = await res.json();
-
-            for (const key in data) {
-                addError(key, data[key][0].charAt(0).toUpperCase() + data[key][0].slice(1));
-            }
-            setLoading(false);
-            return;
-        }
-        else if (res.status === 201) {
-            const signin = await signIn('credentials', {
-                username: username,
-                password: password,
-                callbackUrl: 'http://localhost:3000/chats',
-            })
-
-            // If signin failed, redirect to login page
-            if (signin?.error) {
-                router.push('/login');
+                for (const key in data) {
+                    addError(key, data[key][0].charAt(0).toUpperCase() + data[key][0].slice(1));
+                }
                 setLoading(false);
                 return;
             }
+            else if (res.status === 201) {
+                const signin = await signIn('credentials', {
+                    username: username,
+                    password: password,
+                    callbackUrl: 'http://localhost:3000/chats',
+                })
+
+                // If signin failed, redirect to login page
+                if (signin?.error) {
+                    router.push('/login');
+                    setLoading(false);
+                    return;
+                }
+            }
         }
-        else {
+        catch (e) {
             addError('extra', 'Unable to register');
             setLoading(false);
         }
@@ -99,6 +100,7 @@ export default function Register() {
                                     name="username"
                                     placeholder="Username"
                                     id="username"
+                                    value={username}
                                     onChange={e => {
                                         setUsername(e.target.value)
                                         setError((errors) => {
@@ -119,6 +121,7 @@ export default function Register() {
                                     placeholder="Password"
                                     id="password"
                                     color={strength.color}
+                                    value={password}
                                     onChange={e => setPassword(e.target.value)}
                                 />
                                 <div className={styles.strength}>
@@ -133,6 +136,7 @@ export default function Register() {
                                     name="password2"
                                     placeholder="Re-Password"
                                     id="re-password"
+                                    value={password2}
                                     onChange={e => setPassword2(e.target.value)}
                                     {...(password !== ""
                                         && password2 !== ""
