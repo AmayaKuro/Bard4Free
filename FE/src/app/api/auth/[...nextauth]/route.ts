@@ -83,12 +83,12 @@ const handler = NextAuth({
     events: {
         // Sign out from server when user signs out from client 
         async signOut(messages) {
-            await BackendFetch("/signout", {
+            BackendFetch("/signout", {
                 method: "POST",
                 body: {
                     refresh: messages.token["refresh_token"],
                 },
-            });
+            }).then(() => { }).catch(() => { console.log("Access key đã già rồi còn đú signout") });
         },
     },
 
