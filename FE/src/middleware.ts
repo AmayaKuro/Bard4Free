@@ -17,6 +17,6 @@ export const config = {
       * - image (image files)
       * - / (the root path)
       */
-        '/((?!_next/static|_next/image|favicon.ico|image).+)',
+        '/((?!_next/static|_next/image|favicon.ico|image|login|register).+)',
     ],
 }
