@@ -1,21 +1,11 @@
 import Markdown from 'markdown-to-jsx';
+import { renderToString } from 'react-dom/server';
 
 import { type ResponseProps } from "@/assets/providers/conversation";
 import Wrapper from './response/Wrapper';
 import UserMessage from './response/UserMessage';
 
 import styles from "@/css/main/chat.module.css";
-
-import hljs from "highlight.js/lib/common";
-
-
-const HighLightSyntax: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const highlightedCode = hljs.highlightAuto(children?.toString() || "").value;
-
-    return (
-        <div dangerouslySetInnerHTML={{ __html: highlightedCode }} />
-    );
-}
 
 
 const Chat: React.FC<{ responses: ResponseProps[] }> = ({ responses }) => {
@@ -26,11 +16,9 @@ const Chat: React.FC<{ responses: ResponseProps[] }> = ({ responses }) => {
                     <UserMessage message={response.message} />
 
                     <Wrapper>
-                        <HighLightSyntax>
-                            <Markdown>
-                                {response.log}
-                            </Markdown>
-                        </HighLightSyntax>
+                        <Markdown>
+                            {response.log}
+                        </Markdown>
                     </Wrapper>
                 </div>
             ))}

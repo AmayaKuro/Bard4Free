@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useCallback, useState, useMemo, use } from "react"
 import { useParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
@@ -13,7 +13,7 @@ import { BackendFetch } from "@/assets/fetch/BE"
 import Chat from "@/components/main/chat"
 import { CreateResponseLoading } from "@/components/main/CreateResponseLoading"
 
-// This is for code highlighting
+import hljs from "highlight.js/lib/common";
 import "highlight.js/styles/github-dark.css";
 
 export default function Chats() {
@@ -32,6 +32,13 @@ export default function Chats() {
     const conversation_id = (param as { conversation_id: string }).conversation_id;
     const router = useRouter();
 
+    
+    useEffect(() => {
+        // this will run when the responses has been fetch, and will highlight the code
+        if (hasFetched) {
+            hljs.highlightAll();
+        }
+    }, [hasFetched]);
     
     // This will always set current response props to the last response when responses state changes
     useEffect(() => {
