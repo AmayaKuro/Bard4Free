@@ -1,4 +1,4 @@
-export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://ec2-54-206-95-255.ap-southeast-2.compute.amazonaws.com/api";
+export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://bard4free.amayakuro.id.vn/api";
 
 export const NEXTAUTH_URL = process.env.NEXTAUTH_URL || "https://bard4free.vercel.app";
 
