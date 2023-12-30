@@ -21,6 +21,8 @@ node_modules/
 # Ignore secret file
 **/*_secret*.*
 
+# Ignore BE since it's deployed
+BE
 
 # ============  FE  ============= #
 # dependencies
