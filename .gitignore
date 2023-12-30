@@ -14,8 +14,13 @@ node_modules/
 # Ignore database
 **/db.*
 
-# Ignore key for aws deploy
+# Ignore deployment files
 *.pem
+**/deploy
+
+# Ignore secret file
+**/*_secret*.*
+
 
 # ============  FE  ============= #
 # dependencies
