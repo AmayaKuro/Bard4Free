@@ -2,6 +2,7 @@
 import { signIn } from "next-auth/react";
 import { useState, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { TextField } from '@mui/material'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -85,6 +86,20 @@ export default function Login() {
                         <p>
                             Register <Link href="/register">here</Link>
                         </p>
+                    </div>
+                    <div className={styles.social}>
+                        <hr style={{ minWidth: "80%" }} />
+                        <p>
+                            Or log in with
+                        </p>
+
+                        <Image 
+                        src="https://authjs.dev/img/providers/google.svg" 
+                        width={30} 
+                        height={30}
+                        alt="Google" 
+                        onClick={() => signIn('google')}
+                        className={styles.socialIcon} />
                     </div>
                 </div>
             </main>

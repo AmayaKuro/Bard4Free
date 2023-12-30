@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google";
 
 import { BackendFetch } from "@/assets/fetch/BE";
 import { refreshAccessToken, getCurrentEpochTime } from "@/assets/authenticate/token";
@@ -41,6 +42,46 @@ const handler = NextAuth({
 
                     else throw new Error("Something went wrong")
                 }
+            },
+        }),
+        GoogleProvider({
+            clientId: env.GOOGLE_CLIENT_ID,
+            clientSecret: env.GOOGLE_CLIENT_SECRET,
+
+            token: {
+                url: `${env.BACKEND_URL}/oauth/google`,
+                params: {
+                    scopes: ["openid", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"],
+                },
+                async request(context) {
+                    try {
+                        const data = await BackendFetch("/oauth/google", {
+                            method: "POST",
+                            body: {
+                                ...context.checks,
+                                ...context.params,
+                            },
+                        })
+
+                        if (!data.ok) throw new Error("Something went wrong")
+
+                        const tokens = await data.json()
+
+                        return tokens
+                    }
+                    catch (error) {
+                        // Catch-all error
+                        if (error instanceof Error) throw error
+
+                        else throw new Error("Something went wrong")
+                    }
+                }
+            },
+            async profile(profile, tokens) {
+                return {
+                    "id": profile.sub,
+                    ...tokens,
+                } as typeof profile
             },
         }),
     ],
