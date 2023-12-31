@@ -16,14 +16,14 @@ const inter = Roboto({
 
 export const metadata: Metadata = {
   title: 'Bard4Free',
-  description: 'Bard4Free: Next.js and Django-powered platform with Bard API core. Unleash creativity effortlessly. Join now for a seamless artistic experience.',  
-  openGraph: {  
+  description: 'Bard4Free: Next.js and Django-powered platform with Bard API core. Unleash creativity effortlessly. Join now for a seamless artistic experience.',
+  openGraph: {
     type: 'website',
     locale: 'en_IE',
-    url: 'https://bard4free.vercel.app/', 
+    url: 'https://bard4free.vercel.app/',
     siteName: 'Bard4Free',
     title: 'Bard4Free',
-    description: 'Bard4Free: Next.js and Django-powered platform with Bard API core. Unleash creativity effortlessly. Join now for a seamless artistic experience.', 
+    description: 'Bard4Free: Next.js and Django-powered platform with Bard API core. Unleash creativity effortlessly. Join now for a seamless artistic experience.',
     images: [
       {
         url: 'https://bard4free.vercel.app/image/bard4free-cropped.png',
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
         alt: 'Bard4Free',
       },
     ],
+  },
+  verification: {
+    google: "RzOZB2x7jdBBSGs5ukSMDUumzJvuzz-tQDtLizIpUjI",
   },
 }
 

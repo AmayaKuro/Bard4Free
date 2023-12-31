@@ -1,8 +1,9 @@
 "use client"
-import { signIn } from "next-auth/react";
 import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { signIn } from "next-auth/react";
 
 import { TextField } from '@mui/material'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -15,6 +16,8 @@ export default function Login() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const router = useRouter()
 
     const login = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -38,6 +41,10 @@ export default function Login() {
         if (res?.error) {
             setError(res.error);
             setLoading(false);
+        }
+        else {
+            setLoading(false);
+            router.push('/chats')
         }
 
     }, [username, password])
@@ -93,13 +100,13 @@ export default function Login() {
                             Or log in with
                         </p>
 
-                        <Image 
-                        src="https://authjs.dev/img/providers/google.svg" 
-                        width={30} 
-                        height={30}
-                        alt="Google" 
-                        onClick={() => signIn('google')}
-                        className={styles.socialIcon} />
+                        <Image
+                            src="https://authjs.dev/img/providers/google.svg"
+                            width={30}
+                            height={30}
+                            alt="Google"
+                            onClick={() => signIn('google', { redirect: false })}
+                            className={styles.socialIcon} />
                     </div>
                 </div>
             </main>
