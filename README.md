@@ -1,5 +1,5 @@
 # BARD4FREE
-
+Result website: [bard4free](bard4free.vercel.app/)
 > **NOTE:**
 > Please note that Bard4Free is a educational project that is made possible solely by Google Bard. By using this repository, you agree to the [legal notice](./LEGAL_NOTICE.md). It's also worth mentioning that, since this project is powered using Bard API, this is not suitable for any commercial purposes, activities and other similar actions. Therefore, I strongly discourage using it for any other purposes other than education.
 
@@ -59,7 +59,7 @@ python manage.py runserver
 then you should be good to go :ok_hand:
 
 > **NOTE:**
-> This BE will take your local IP address at port 8000 (e.g. http://127.0.0.1:8000/), so if you want to test BE's API, you can link your testing app to that route.
+> This BE will take your local IP address at port 8000 (e.g. http://127.0.0.1:8000/), so if you want to test BE's API (using [Postman](https://www.postman.com/downloads/)), you can link your testing app to that route.
 
 #### FE
 1. Navigate to `FE` folder:
@@ -76,4 +76,4 @@ npm run dev
 
 
 #### CURRENT STATE OF THE PROJECT:
-- `Deploying | Optimizing`
+- `Production | Finished`
