@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { signIn } from "next-auth/react";
 
 import { TextField } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { motion } from "framer-motion";
 
@@ -48,6 +49,17 @@ export default function Login() {
         }
 
     }, [username, password])
+
+    const OAuthLogin = useCallback(async (provider: string) => {
+        const res = await signIn(provider, { redirect: false });
+
+        if (res?.error) {
+            setError(res.error);
+        }
+        else {
+            router.push('/chats')
+        }
+    }, [])
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -100,13 +112,14 @@ export default function Login() {
                             Or log in with
                         </p>
 
-                        <Image
-                            src="https://authjs.dev/img/providers/google.svg"
-                            width={30}
-                            height={30}
-                            alt="Google"
-                            onClick={() => signIn('google', { redirect: false })}
-                            className={styles.socialIcon} />
+                        <IconButton onClick={() => OAuthLogin("google")}>
+                            <Image
+                                src="https://authjs.dev/img/providers/google.svg"
+                                width={30}
+                                height={30}
+                                alt="Google"
+                            />
+                        </IconButton>
                     </div>
                 </div>
             </main>
