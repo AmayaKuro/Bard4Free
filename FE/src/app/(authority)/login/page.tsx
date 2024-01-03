@@ -1,8 +1,8 @@
 "use client"
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from "next-auth/react";
 
 import { TextField } from '@mui/material'
@@ -19,6 +19,14 @@ export default function Login() {
     const [loading, setLoading] = useState(false)
 
     const router = useRouter()
+
+    const params = useSearchParams()
+
+    useEffect(() => {
+        if (params.get('error')) {
+            setError("Something went wrong, please try again later")
+        }
+    }, [params])
 
     const login = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
