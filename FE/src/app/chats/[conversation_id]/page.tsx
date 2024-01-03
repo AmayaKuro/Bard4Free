@@ -1,9 +1,8 @@
 "use client"
-import { useEffect, useCallback, useState, useMemo, use } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { useParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
-
 
 import { type FetchResponseProps, useConversation, } from "@/assets/providers/conversation"
 import { useAlert } from "@/assets/providers/alert"
@@ -13,8 +12,6 @@ import { BackendFetch } from "@/assets/fetch/BE"
 import Chat from "@/components/main/chat"
 import { CreateResponseLoading } from "@/components/main/CreateResponseLoading"
 
-import hljs from "highlight.js/lib/common";
-import "highlight.js/styles/github-dark.css";
 
 export default function Chats() {
     const { state, dispatch: { setCurrentResponseProps, setResponse } } = useConversation();
@@ -32,14 +29,7 @@ export default function Chats() {
     const conversation_id = (param as { conversation_id: string }).conversation_id;
     const router = useRouter();
 
-    
-    useEffect(() => {
-        // this will run when the responses has been fetch, and will highlight the code
-        if (hasFetched) {
-            hljs.highlightAll();
-        }
-    }, [hasFetched]);
-    
+
     // This will always set current response props to the last response when responses state changes
     useEffect(() => {
         // Match the current conversation_id to the conversation title
@@ -96,11 +86,18 @@ export default function Chats() {
 
     return (
         <>
-            {!hasFetched ? <CreateResponseLoading />
-                : <Chat responses={responses} />}
-            {(createStatus.isCreating && hasFetched && createStatus.conversation_id === conversation_id)
-                ? <CreateResponseLoading message={createStatus.message} />
-                : null
+            {   // For display chat
+                !hasFetched
+                    ? <CreateResponseLoading />
+                    : responses.map((response, i) => (
+                        <Chat key={response.response_id} response={response} isLast={i === responses.length - 1} />
+                    ))
+            }
+
+            {    // For loading state when fetching 
+                (createStatus.isCreating && createStatus.conversation_id === conversation_id)
+                    ? <CreateResponseLoading message={createStatus.message} />
+                    : null
             }
         </>
 
