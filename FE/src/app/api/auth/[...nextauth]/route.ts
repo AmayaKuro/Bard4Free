@@ -30,6 +30,8 @@ const handler = NextAuth({
 
                     if (res.status === 401) throw new Error("Username or password is incorrect")
 
+                    else if (!res.ok) throw new Error("Something went wrong")
+
                     const data = await res.json()
 
                     // If no error and we have user data, return it
